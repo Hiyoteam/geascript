@@ -1,7 +1,7 @@
 from sly import Lexer, Parser
 from util import _
 
-class CalcLexer(Lexer):
+class GeaLexer(Lexer):
     tokens = { "NAME", "NUMBER", "PLUS", "TIMES", "MINUS", "DIVIDE", "ASSIGN", "LPAREN", "RPAREN", "STRING", "ECHO", "EXIT"}
     ignore = ' \t'
 
@@ -32,8 +32,8 @@ class CalcLexer(Lexer):
         print("Illegal character '%s'" % t.value[0])
         self.index += 1
 
-class CalcParser(Parser):
-    tokens = CalcLexer.tokens
+class GeaParser(Parser):
+    tokens = GeaLexer.tokens
 
     precedence = (
         ('left', "PLUS", "MINUS"),
@@ -103,14 +103,3 @@ class CalcParser(Parser):
         except LookupError:
             print(f'Undefined name {p.NAME!r}')
             return 0
-
-if __name__ == '__main__':
-    lexer = CalcLexer()
-    parser = CalcParser()
-    while True:
-        try:
-            text = input('gea-repl > ')
-        except EOFError:
-            break
-        if text:
-            parser.parse(lexer.tokenize(text))
